@@ -9,6 +9,7 @@ import (
 	"image/png"
 	"io/ioutil"
 	"os"
+	"strings"
 )
 
 const folder = "./images/"
@@ -26,6 +27,9 @@ func convertAll() error {
 		return err
 	}
 	for _, file := range files {
+		if file.IsDir() || !strings.HasSuffix(file.Name(), ".png") {
+			continue
+		}
 		err = convert(folder+"src/"+file.Name(), folder+"out/"+file.Name())
 		if err != nil {
 			return err
